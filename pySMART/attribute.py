@@ -65,8 +65,11 @@ class Attribute(object):
         In the interest of not overflowing 80-character lines this does not
         print the value of `pySMART.attribute.Attribute.flags_hex`.
         """
-        return "{0:>3} {1:24}{2:4}{3:4}{4:4}{5:9}{6:8}{7:12}{8}".format(
-            self.num, self.name, self.value, self.worst, self.thresh,
-            self.type, self.updated, self.when_failed, self.raw)
+        if(self.type == 'NVMe'):
+            return '{0:35} {1}'.format(self.name + ':', self.value)
+        else:
+            return "{0:>3} {1:24}{2:4}{3:4}{4:4}{5:9}{6:8}{7:12}{8}".format(
+                self.num, self.name, self.value, self.worst, self.thresh,
+                self.type, self.updated, self.when_failed, self.raw)
 
 __all__ = ['Attribute']
