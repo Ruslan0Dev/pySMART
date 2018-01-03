@@ -497,8 +497,7 @@ class Device(object):
             if 'Firmware Version' in line or 'Revision' in line:
                 self.firmware = line.split(':')[1].lstrip().rstrip()
             if 'User Capacity' in line:
-                self.capacity = (
-                    line.replace(']', '[').split('[')[1].lstrip().rstrip())
+                self.capacity = line.replace(']', '[').split('[')[1].lstrip().rstrip()
             if 'SMART support' in line:
                 self.supports_smart = 'Enabled' in line
             if 'does not support SMART' in line:
