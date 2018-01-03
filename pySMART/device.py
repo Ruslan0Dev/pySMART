@@ -90,7 +90,10 @@ class Device(object):
         **(bool):** True if this device is a Solid State Drive.
         False otherwise.
         """
-        self.attributes = [None] * 256
+        if(interface == 'nvme'):
+            self.attributes = []
+        else:
+            self.attributes = [None] * 256
         """
         **(list of `Attribute`):** Contains the complete SMART table information
         for this device, as provided by smartctl. Indexed by attribute #,
@@ -222,6 +225,8 @@ class Device(object):
                 for line in _stdout.split('\n'):
                     if 'Transport protocol' in line and 'SAS' in line:
                         self.interface = 'sas'
+        elif(self.interface == 'nvme'):
+            self.attributes = []
 
     def get_selftest_result(self, output=None):
         """
@@ -438,6 +443,7 @@ class Device(object):
                     stdout=PIPE, stderr=PIPE)
         _stdout, _stderr = cmd.communicate()
         _stdout = _stdout.decode('UTF-8')
+        start_recording_nvme_attrs = False
         parse_self_tests = False
         parse_ascq = False
         self.tests = []
@@ -523,6 +529,13 @@ class Device(object):
                     self.attributes[int(line_[0])] = Attribute(
                         line_[0], line_[1], line[2], line_[3], line_[4],
                         line_[5], line_[6], line_[7], line_[8], line_[9])
+            elif(smartctl_type[self.interface] == 'nvme'):
+                if('SMART/Health Information' in line):
+                    start_recording_nvme_attrs = True
+                elif(start_recording_nvme_attrs and ':' in line):
+                    (attr, value) = line.split(':', 1)
+                    value = value.strip()
+                    self.attributes.append(Attribute(0, attr, 0, value, 0, 0, 'NVMe', 'Always', '-', value))
             if 'Description' in line and '(hours)' in line:
                 parse_self_tests = True  # Set flag to capture test entries
             if 'No self-tests have been logged' in line:
