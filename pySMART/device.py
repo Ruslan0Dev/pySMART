@@ -501,6 +501,10 @@ class Device(object):
             if 'User Capacity' in line:
                 self.capacity = line.replace(']', '[').split('[')[1].lstrip().rstrip()
                 self.raw_capacity = int(line.split(':', 1)[1].split('[', 1)[0].strip().replace(',', ''))
+            elif('Size/Capacity' in line):
+                if(self.raw_capacity == None):
+                    self.raw_capacity = 0
+                self.raw_capacity += int(line.split(':', 1)[1].split('[', 1)[0].strip().replace(',', ''))
             if 'SMART support' in line:
                 self.supports_smart = 'Enabled' in line
             if 'does not support SMART' in line:
