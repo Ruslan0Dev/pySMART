@@ -41,7 +41,7 @@ class Device(object):
     def __init__(self, name, interface=None):
         """Instantiates and initializes the `pySMART.device.Device`."""
         assert interface is None or interface.lower() in [
-            'ata', 'csmi', 'sas', 'sat', 'sata', 'scsi']
+            'ata', 'csmi', 'sas', 'sat', 'sata', 'scsi', 'nvme']
         self.name = name.replace('/dev/', '')
         """
         **(str):** Device's hardware ID, without the '/dev/' prefix.
@@ -64,6 +64,7 @@ class Device(object):
             SAS port)
             * **CSMI** - Common Storage Management Interface (Intel ICH /
             Matrix RAID)
+            * **NVME** - NVMe on PCI-Express bus
         Generally this should not be specified to allow auto-detection to occur.
         Otherwise, this value overrides the auto-detected type and could
         produce unexpected or no data.
