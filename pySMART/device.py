@@ -514,7 +514,7 @@ class Device(object):
                     parse_ascq = True  # Set flag to capture status message
                     message = line.split(':')[1].lstrip().rstrip()
             # SMART Attribute table parsing
-            if '0x0' in line and '_' in line:
+            if smartctl_type[self.interface] != 'nvme' and '0x0' in line and '_' in line:
                 # Replace multiple space separators with a single space, then
                 # tokenize the string on space delimiters
                 line_ = ' '.join(line.split()).split(' ')
