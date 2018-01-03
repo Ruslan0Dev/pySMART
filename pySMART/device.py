@@ -500,7 +500,7 @@ class Device(object):
                 self.firmware = line.split(':')[1].lstrip().rstrip()
             if 'User Capacity' in line:
                 self.capacity = line.replace(']', '[').split('[')[1].lstrip().rstrip()
-                self.raw_capacity = int(line.split(':', 1)[1].split('[', 1)[0].strip().replace(',', ''))
+                self.raw_capacity = int(line.split(':', 1)[1].strip().split(' ', 1)[0].replace(',', ''))
             elif('Size/Capacity' in line):
                 if(self.raw_capacity == None):
                     self.raw_capacity = 0
