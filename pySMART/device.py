@@ -124,7 +124,7 @@ class Device(object):
         # If no interface type was provided, scan for the device
         elif self.interface is None:
             _grep = 'find' if OS == 'Windows' else 'grep'
-            cmd = Popen('smartctl --scan-open | {0} "{1}"'.format(
+            cmd = Popen('(smartctl --scan-open; smartctl --scan-open -d nvme) | {0} "{1}"'.format(
                 _grep, self.name), shell=True, stdout=PIPE, stderr=PIPE)
             _stdout, _stderr = cmd.communicate()
             _stdout = _stdout.decode('UTF-8')
