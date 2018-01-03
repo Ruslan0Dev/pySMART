@@ -487,7 +487,7 @@ class Device(object):
             # Basic device information parsing
             if 'Model Family' in line:
                 self._guess_SMART_type(line.lower())
-            if 'Device Model' in line or 'Product' in line:
+            if 'Device Model' in line or 'Product' in line or 'Model Number' in line:
                 self.model = line.split(':')[1].lstrip().rstrip()
                 self._guess_SMART_type(line.lower())
             if 'Serial Number' in line or 'Serial number' in line:
