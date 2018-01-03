@@ -154,7 +154,7 @@ class Device(object):
         Prints the entire SMART attribute table, in a format similar to
         the output of smartctl.
         """
-        header_printed = False
+        header_printed = True if self.interface == 'nvme' else False
         for attr in self.attributes:
             if attr is not None:
                 if not header_printed:
