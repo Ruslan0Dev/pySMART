@@ -543,7 +543,12 @@ class Device(object):
                 elif(start_recording_nvme_attrs and ':' in line):
                     (attr, value) = line.split(':', 1)
                     value = value.strip()
-                    self.attributes.append(Attribute(0, attr, 0, value, 0, 0, 'NVMe', 'Always', '-', value))
+                    raw_value = value.split(' ', 1)[0].replace(',', '')
+                    if(value[-1] == '%'):
+                        raw_value = float(raw_value.replace('%', '')) / 100.0
+                    else:
+                        raw_value = int(raw_value, 0)
+                    self.attributes.append(Attribute(0, attr, 0, value, 0, 0, 'NVMe', 'Always', '-', raw_value))
             if 'Description' in line and '(hours)' in line:
                 parse_self_tests = True  # Set flag to capture test entries
             if 'No self-tests have been logged' in line:
