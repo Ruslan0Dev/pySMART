@@ -533,8 +533,8 @@ class Device(object):
                 line_ = ' '.join(line.split()).split(' ')
                 if not '' in line_:
                     self.attributes[int(line_[0])] = Attribute(
-                        int(line_[0], 0), line_[1], line[2], line_[3], line_[4],
-                        line_[5], line_[6], line_[7], line_[8], int(line_[9]))
+                        int(line_[0], 0), line_[1], line[2], int(line_[3]), int(line_[4]),
+                        int(line_[5]), line_[6], line_[7], line_[8], int(line_[9]))
             elif(smartctl_type[self.interface] == 'nvme'):
                 self.supports_smart = True
                 self.is_ssd = True
