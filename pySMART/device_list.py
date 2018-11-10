@@ -123,7 +123,7 @@ class DeviceList(object):
         # Remove duplicates and unwanted devices (optical, etc.) from the list
         self._cleanup()
         # Sort the list alphabetically by device name
-        self.simpledevicelist.sort(key=lambda name: name)
+        self.simpledevicelist.sort(key=lambda sdl: sdl['name'])
         self.devices.sort(key=lambda device: device.name)
 
     def list_devicenames(self):
